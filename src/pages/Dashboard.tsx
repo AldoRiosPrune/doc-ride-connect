@@ -1,12 +1,64 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableCaption } from "@/components/ui/table";
 import { Heart, Bell, Settings, LogOut, User, Phone, FlaskRound, Zap, FileText, UserPlus, Stethoscope, HeartPulse, Baby, BrainCircuit } from "lucide-react";
 import { Link } from "react-router-dom";
 import QuickStats from "@/components/QuickStats";
+import { useAuthStatus } from "@/hooks/useAuthStatus";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
+  const { isAuthenticated } = useAuthStatus();
+  const { toast } = useToast();
+
+  const handleScheduleLabTest = (testName: string) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Acceso requerido",
+        description: "Por favor, inicia sesión para agendar un análisis.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "¡Análisis agendado!",
+      description: `Tu ${testName} ha sido agendado exitosamente. Recibirás una confirmación por email.`,
+    });
+  };
+
+  const handleFlashConsultation = (specialty: string) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Acceso requerido", 
+        description: "Por favor, inicia sesión para iniciar una consulta.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "¡Consulta iniciada!",
+      description: `Conectando con un especialista en ${specialty}...`,
+    });
+  };
+
+  const handleQuickAction = (action: string) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Acceso requerido",
+        description: "Por favor, inicia sesión para continuar.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Acción ejecutada",
+      description: `${action} iniciado exitosamente.`,
+    });
+  };
+
   const promoStats = [
     {
       title: "Análisis de Laboratorio",
@@ -127,7 +179,13 @@ const Dashboard = () => {
                         <TableCell className="text-gray-600">{test.details}</TableCell>
                         <TableCell className="text-right font-semibold">{test.price}</TableCell>
                         <TableCell className="text-right">
-                          <Button size="sm" variant="outline">Agendar</Button>
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => handleScheduleLabTest(test.name)}
+                          >
+                            Agendar
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -155,7 +213,12 @@ const Dashboard = () => {
                            </div>
                           <span className="font-medium">{consult.specialty}</span>
                         </div>
-                        <Button size="sm">Consultar</Button>
+                        <Button 
+                          size="sm"
+                          onClick={() => handleFlashConsultation(consult.specialty)}
+                        >
+                          Consultar
+                        </Button>
                       </CardContent>
                     </Card>
                   ))}
@@ -172,15 +235,27 @@ const Dashboard = () => {
                 <CardTitle className="text-lg">Acciones Rápidas</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => handleQuickAction("Agendar Análisis")}
+                >
                   <FlaskRound className="w-4 h-4 mr-2" />
                   Agendar Análisis
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => handleQuickAction("Consulta Flash")}
+                >
                   <Zap className="w-4 h-4 mr-2" />
                   Iniciar Consulta Flash
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => handleQuickAction("Contactar Soporte")}
+                >
                   <Phone className="w-4 h-4 mr-2" />
                   Contactar Soporte
                 </Button>
