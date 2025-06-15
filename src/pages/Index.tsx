@@ -9,6 +9,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Specialties from "@/components/Specialties";
 import FeaturedDoctors from "@/components/FeaturedDoctors";
+import DoctorCTA from "@/components/DoctorCTA";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
 
@@ -19,6 +20,7 @@ const Index = () => {
       <Hero />
       <Specialties />
       <FeaturedDoctors />
+      <DoctorCTA />
       <HowItWorks />
       <Footer />
     </div>
