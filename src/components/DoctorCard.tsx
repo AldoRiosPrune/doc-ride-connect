@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, MapPin, Clock, Calendar, Lock } from "lucide-react";
 import { useAuthStatus } from "@/hooks/useAuthStatus";
+import { useToast } from "@/hooks/use-toast";
 import {
   TooltipProvider,
   Tooltip,
@@ -31,9 +32,20 @@ interface DoctorCardProps {
 
 const DoctorCard = ({ doctor }: DoctorCardProps) => {
   const { isLoggedIn } = useAuthStatus();
+  const { toast } = useToast();
 
   // El botón solo debe poder clickearse si está logueado y el doctor está disponible
   const canSchedule = doctor.available && isLoggedIn;
+
+  const handleScheduleAppointment = () => {
+    if (canSchedule) {
+      toast({
+        title: "¡Cita agendada!",
+        description: `Tu cita con ${doctor.name} ha sido agendada exitosamente.`,
+      });
+      console.log(`Agendando cita con ${doctor.name}`);
+    }
+  };
 
   return (
     <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
@@ -109,6 +121,7 @@ const DoctorCard = ({ doctor }: DoctorCardProps) => {
                         : "bg-gray-300 hover:bg-gray-400 cursor-not-allowed"
                     } text-white`}
                     disabled={!canSchedule}
+                    onClick={handleScheduleAppointment}
                   >
                     {!isLoggedIn ? (
                       <span className="flex items-center gap-2">
