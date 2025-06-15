@@ -1,3 +1,4 @@
+
 import DoctorCard from "./DoctorCard";
 
 // Hacemos el componente más flexible:
@@ -40,7 +41,19 @@ const FeaturedDoctors = ({
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {doctors.map((doctor) => (
-            <DoctorCard key={doctor.id} doctor={doctor} />
+            <DoctorCard 
+              key={doctor.id} 
+              id={doctor.id}
+              name={doctor.name}
+              specialty={doctor.specialty}
+              rating={doctor.rating}
+              reviewCount={doctor.reviews}
+              location={doctor.location}
+              availability={doctor.nextAvailable}
+              image={doctor.image}
+              price={doctor.price}
+              experience={doctor.experience}
+            />
           ))}
         </div>
       </div>
