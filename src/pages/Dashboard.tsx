@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,7 +20,7 @@ const Dashboard = () => {
       specialty: "Cardiología",
       date: "2025-06-16",
       time: "10:00 AM",
-      status: "confirmed",
+      status: "confirmed" as const,
       location: "Clínica Central",
       avatar: "/placeholder.svg"
     },
@@ -31,7 +30,7 @@ const Dashboard = () => {
       specialty: "Dermatología",
       date: "2025-06-18",
       time: "2:30 PM",
-      status: "pending",
+      status: "pending" as const,
       location: "Hospital San Juan",
       avatar: "/placeholder.svg"
     },
@@ -41,7 +40,7 @@ const Dashboard = () => {
       specialty: "Neurología",
       date: "2025-06-20",
       time: "11:15 AM",
-      status: "confirmed",
+      status: "confirmed" as const,
       location: "Centro Médico Norte",
       avatar: "/placeholder.svg"
     }
