@@ -1,49 +1,55 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, Clock, MapPin, Phone, User, Heart, Bell, Settings, LogOut, Plus, Filter } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableCaption } from "@/components/ui/table";
+import { Heart, Bell, Settings, LogOut, User, Phone, FlaskRound, Zap, FileText, UserPlus, Stethoscope, HeartPulse, Baby, BrainCircuit } from "lucide-react";
 import { Link } from "react-router-dom";
-import AppointmentCard from "@/components/AppointmentCard";
 import QuickStats from "@/components/QuickStats";
-import UpcomingAppointments from "@/components/UpcomingAppointments";
 
 const Dashboard = () => {
-  const [userType, setUserType] = useState<"patient" | "doctor">("patient");
-  
-  // Simulamos datos de citas para demostración
-  const upcomingAppointments = [
+  const promoStats = [
     {
-      id: 1,
-      doctorName: "Dr. María González",
-      specialty: "Cardiología",
-      date: "2025-06-16",
-      time: "10:00 AM",
-      status: "confirmed" as const,
-      location: "Clínica Central",
-      avatar: "/placeholder.svg"
+      title: "Análisis de Laboratorio",
+      value: "+50 tipos",
+      change: "Resultados rápidos y fiables",
+      icon: FlaskRound,
+      color: "text-blue-600"
     },
     {
-      id: 2,
-      doctorName: "Dr. Carlos Méndez",
-      specialty: "Dermatología",
-      date: "2025-06-18",
-      time: "2:30 PM",
-      status: "pending" as const,
-      location: "Hospital San Juan",
-      avatar: "/placeholder.svg"
+      title: "Consultas Flash",
+      value: "Desde 15€",
+      change: "Habla con un doctor ahora",
+      icon: Zap,
+      color: "text-green-600"
     },
     {
-      id: 3,
-      doctorName: "Dra. Ana López",
-      specialty: "Neurología",
-      date: "2025-06-20",
-      time: "11:15 AM",
-      status: "confirmed" as const,
-      location: "Centro Médico Norte",
-      avatar: "/placeholder.svg"
+      title: "Resultados Online",
+      value: "En 24h",
+      change: "Accede desde tu perfil",
+      icon: FileText,
+      color: "text-purple-600"
+    },
+    {
+      title: "Nuevos Especialistas",
+      value: "+10 esta semana",
+      change: "Cardiología, Derma y más",
+      icon: UserPlus,
+      color: "text-orange-600"
     }
+  ];
+
+  const labTests = [
+    { name: "Perfil Lipídico", price: "25€", details: "Colesterol, triglicéridos..." },
+    { name: "Hemograma Completo", price: "15€", details: "Glóbulos rojos, blancos..." },
+    { name: "Glucosa en Ayunas", price: "10€", details: "Nivel de azúcar en sangre" },
+    { name: "Función Tiroidea (TSH)", price: "20€", details: "Control de tiroides" },
+  ];
+
+  const flashConsultations = [
+    { specialty: "Medicina General", icon: Stethoscope, color: "bg-blue-100 text-blue-600" },
+    { specialty: "Cardiología", icon: HeartPulse, color: "bg-red-100 text-red-600" },
+    { specialty: "Pediatría", icon: Baby, color: "bg-purple-100 text-purple-600" },
+    { specialty: "Psicología", icon: BrainCircuit, color: "bg-orange-100 text-orange-600" },
   ];
 
   return (
@@ -81,104 +87,85 @@ const Dashboard = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            ¡Bienvenido de vuelta, Juan! 👋
+            Explora nuestros servicios destacados 🔬
           </h1>
           <p className="text-gray-600">
-            Aquí tienes un resumen de tus citas médicas y actividad reciente.
+            Encuentra análisis de laboratorio y consultas médicas al instante.
           </p>
         </div>
 
         {/* Quick Stats */}
-        <QuickStats userType={userType} />
+        <QuickStats stats={promoStats} />
 
         {/* Main Content */}
         <div className="grid lg:grid-cols-3 gap-8 mt-8">
-          {/* Left Column - Appointments */}
-          <div className="lg:col-span-2">
-            <Tabs defaultValue="upcoming" className="w-full">
-              <div className="flex items-center justify-between mb-6">
-                <TabsList className="grid w-full grid-cols-3 max-w-md">
-                  <TabsTrigger value="upcoming">Próximas</TabsTrigger>
-                  <TabsTrigger value="completed">Completadas</TabsTrigger>
-                  <TabsTrigger value="cancelled">Canceladas</TabsTrigger>
-                </TabsList>
-                
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
-                    <Filter className="w-4 h-4 mr-2" />
-                    Filtros
-                  </Button>
-                  <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Nueva Cita
-                  </Button>
-                </div>
-              </div>
+          {/* Left Column - Promotional Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Lab Tests Section */}
+            <Card className="hover:shadow-lg transition-shadow duration-300">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-xl">
+                  <FlaskRound className="w-6 h-6 text-blue-600" />
+                  Análisis de Laboratorio Populares
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableCaption>Precios competitivos y resultados rápidos.</TableCaption>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[200px]">Análisis</TableHead>
+                      <TableHead>Detalles</TableHead>
+                      <TableHead className="text-right">Precio</TableHead>
+                      <TableHead className="text-right">Acción</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {labTests.map((test) => (
+                      <TableRow key={test.name}>
+                        <TableCell className="font-medium">{test.name}</TableCell>
+                        <TableCell className="text-gray-600">{test.details}</TableCell>
+                        <TableCell className="text-right font-semibold">{test.price}</TableCell>
+                        <TableCell className="text-right">
+                          <Button size="sm" variant="outline">Agendar</Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
 
-              <TabsContent value="upcoming">
-                <UpcomingAppointments appointments={upcomingAppointments} />
-              </TabsContent>
-
-              <TabsContent value="completed">
-                <div className="text-center py-12">
-                  <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-600 mb-2">No hay citas completadas</h3>
-                  <p className="text-gray-500">Cuando completes citas, aparecerán aquí.</p>
+            {/* Flash Consultations Section */}
+            <Card className="hover:shadow-lg transition-shadow duration-300">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-xl">
+                  <Zap className="w-6 h-6 text-green-600" />
+                  Consultas Flash por Especialidad
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {flashConsultations.map((consult) => (
+                    <Card key={consult.specialty} className="hover:bg-gray-50 transition-colors">
+                      <CardContent className="p-4 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                           <div className={`w-10 h-10 rounded-full flex items-center justify-center ${consult.color}`}>
+                            <consult.icon className="w-5 h-5" />
+                           </div>
+                          <span className="font-medium">{consult.specialty}</span>
+                        </div>
+                        <Button size="sm">Consultar</Button>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
-              </TabsContent>
-
-              <TabsContent value="cancelled">
-                <div className="text-center py-12">
-                  <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-600 mb-2">No hay citas canceladas</h3>
-                  <p className="text-gray-500">Esperamos que no necesites cancelar ninguna cita.</p>
-                </div>
-              </TabsContent>
-            </Tabs>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Right Column - Sidebar */}
           <div className="space-y-6">
-            {/* Next Appointment */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-blue-600" />
-                  Próxima Cita
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                      <User className="w-5 h-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Dr. María González</p>
-                      <p className="text-sm text-gray-600">Cardiología</p>
-                    </div>
-                  </div>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <Calendar className="w-4 h-4" />
-                      Mañana, 16 de Junio
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <Clock className="w-4 h-4" />
-                      10:00 AM
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <MapPin className="w-4 h-4" />
-                      Clínica Central
-                    </div>
-                  </div>
-                  <Button className="w-full mt-4" size="sm">
-                    Ver Detalles
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
             {/* Quick Actions */}
             <Card>
               <CardHeader>
@@ -186,12 +173,12 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button variant="outline" className="w-full justify-start">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Agendar Nueva Cita
+                  <FlaskRound className="w-4 h-4 mr-2" />
+                  Agendar Análisis
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
-                  <User className="w-4 h-4 mr-2" />
-                  Buscar Doctores
+                  <Zap className="w-4 h-4 mr-2" />
+                  Iniciar Consulta Flash
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
                   <Phone className="w-4 h-4 mr-2" />
