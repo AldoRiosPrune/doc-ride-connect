@@ -7,6 +7,6 @@ import { useState } from "react";
  */
 export const useAuthStatus = () => {
   // Cambia esto a `true` para simular usuario logueado, o intégralo con la lógica real.
-  const [isLoggedIn] = useState(false); 
+  const [isLoggedIn] = useState(true); 
   return { isLoggedIn };
 };
