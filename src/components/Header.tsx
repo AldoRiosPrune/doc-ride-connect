@@ -14,7 +14,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-blue-600">
             <Heart className="w-8 h-8" />
-            DocUber
+            Alldoctor
           </Link>
 
           {/* Desktop Navigation */}

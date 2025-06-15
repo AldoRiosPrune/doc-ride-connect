@@ -25,7 +25,7 @@ const Login = () => {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-3xl font-bold text-blue-600 hover:text-blue-700 transition-colors">
             <Heart className="w-8 h-8" />
-            DocUber
+            Alldoctor
           </Link>
           <p className="text-gray-600 mt-2">Inicia sesión en tu cuenta</p>
         </div>
