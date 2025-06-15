@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import QuickStats from "@/components/QuickStats";
 import { useAuthStatus } from "@/hooks/useAuthStatus";
 import { useToast } from "@/hooks/use-toast";
+import UserProfileDropdown from "@/components/UserProfileDropdown";
 
 const Dashboard = () => {
   const { isAuthenticated } = useAuthStatus();
@@ -125,12 +126,7 @@ const Dashboard = () => {
               <Button variant="ghost" size="icon">
                 <LogOut className="w-5 h-5" />
               </Button>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                  <User className="w-4 h-4 text-white" />
-                </div>
-                <span className="font-medium">Juan Pérez</span>
-              </div>
+              <UserProfileDropdown userName="Juan Pérez" />
             </div>
           </div>
         </div>
