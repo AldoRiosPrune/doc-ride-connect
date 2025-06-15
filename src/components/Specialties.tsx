@@ -1,5 +1,6 @@
 
 import { Card } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 import { 
   Heart, 
   Brain, 
@@ -14,6 +15,7 @@ import {
 const specialties = [
   {
     name: "Cardiología",
+    slug: "cardiologia",
     icon: Heart,
     color: "text-red-500",
     bgColor: "bg-red-50",
@@ -21,6 +23,7 @@ const specialties = [
   },
   {
     name: "Neurología",
+    slug: "neurologia",
     icon: Brain,
     color: "text-purple-500",
     bgColor: "bg-purple-50",
@@ -28,6 +31,7 @@ const specialties = [
   },
   {
     name: "Oftalmología",
+    slug: "oftalmologia",
     icon: Eye,
     color: "text-blue-500",
     bgColor: "bg-blue-50",
@@ -35,6 +39,7 @@ const specialties = [
   },
   {
     name: "Traumatología",
+    slug: "traumatologia",
     icon: Bone,
     color: "text-orange-500",
     bgColor: "bg-orange-50",
@@ -42,6 +47,7 @@ const specialties = [
   },
   {
     name: "Pediatría",
+    slug: "pediatria",
     icon: Baby,
     color: "text-pink-500",
     bgColor: "bg-pink-50",
@@ -49,6 +55,7 @@ const specialties = [
   },
   {
     name: "Medicina General",
+    slug: "medicina-general",
     icon: Stethoscope,
     color: "text-green-500",
     bgColor: "bg-green-50",
@@ -56,6 +63,7 @@ const specialties = [
   },
   {
     name: "Psiquiatría",
+    slug: "psiquiatria",
     icon: User,
     color: "text-indigo-500",
     bgColor: "bg-indigo-50",
@@ -63,6 +71,7 @@ const specialties = [
   },
   {
     name: "Farmacología",
+    slug: "farmacologia",
     icon: Pill,
     color: "text-yellow-500",
     bgColor: "bg-yellow-50",
@@ -71,6 +80,12 @@ const specialties = [
 ];
 
 const Specialties = () => {
+  const navigate = useNavigate();
+
+  const handleSpecialtyClick = (slug: string) => {
+    navigate(`/especialidades/${slug}`);
+  };
+
   return (
     <section className="py-16 px-4 bg-white">
       <div className="container mx-auto">
@@ -87,13 +102,14 @@ const Specialties = () => {
           {specialties.map((specialty, index) => (
             <Card 
               key={index} 
-              className="p-6 hover:shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1 border-gray-100"
+              className="p-6 hover:shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1 border-gray-100 hover:border-blue-200"
+              onClick={() => handleSpecialtyClick(specialty.slug)}
             >
               <div className="text-center">
-                <div className={`${specialty.bgColor} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}>
+                <div className={`${specialty.bgColor} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform hover:scale-110`}>
                   <specialty.icon className={`h-8 w-8 ${specialty.color}`} />
                 </div>
-                <h3 className="font-semibold text-gray-800 mb-2">{specialty.name}</h3>
+                <h3 className="font-semibold text-gray-800 mb-2 hover:text-blue-600 transition-colors">{specialty.name}</h3>
                 <p className="text-sm text-gray-500">{specialty.doctors} doctores</p>
               </div>
             </Card>
