@@ -4,7 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, MapPin, Clock, Calendar, Lock } from "lucide-react";
 import { useAuthStatus } from "@/hooks/useAuthStatus";
-import { Tooltip } from "@/components/ui/tooltip";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 
 interface Doctor {
   id: number;
@@ -93,9 +98,9 @@ const DoctorCard = ({ doctor }: DoctorCardProps) => {
           </div>
 
           {/* Botón: solo activo si existe sesión y doctor disponible */}
-          <Tooltip.Provider>
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
                 <span>
                   <Button
                     className={`w-full ${
@@ -117,15 +122,15 @@ const DoctorCard = ({ doctor }: DoctorCardProps) => {
                     )}
                   </Button>
                 </span>
-              </Tooltip.Trigger>
+              </TooltipTrigger>
               {/* Mostrar tooltip solo si no está logueado */}
               {!isLoggedIn && (
-                <Tooltip.Content side="top" align="center">
+                <TooltipContent side="top" align="center">
                   Inicia sesión para poder agendar una cita.
-                </Tooltip.Content>
+                </TooltipContent>
               )}
-            </Tooltip.Root>
-          </Tooltip.Provider>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
     </Card>
