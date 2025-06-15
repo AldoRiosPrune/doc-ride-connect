@@ -2,66 +2,93 @@
 import { Button } from "@/components/ui/button";
 import { Heart, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white/95 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50">
+    <header className="bg-white shadow-sm border-b">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="bg-gradient-to-r from-blue-600 to-green-500 p-2 rounded-lg">
-              <Heart className="h-6 w-6 text-white" />
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
-              DocUber
-            </span>
-          </div>
+          <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-blue-600">
+            <Heart className="w-8 h-8" />
+            DocUber
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">Inicio</a>
-            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">Doctores</a>
-            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">Especialidades</a>
-            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">Cómo funciona</a>
+            <Link to="/" className="text-gray-600 hover:text-blue-600 transition-colors">
+              Inicio
+            </Link>
+            <Link to="/doctors" className="text-gray-600 hover:text-blue-600 transition-colors">
+              Doctores
+            </Link>
+            <Link to="/specialties" className="text-gray-600 hover:text-blue-600 transition-colors">
+              Especialidades
+            </Link>
+            <Link to="/about" className="text-gray-600 hover:text-blue-600 transition-colors">
+              Nosotros
+            </Link>
+            <Link to="/contact" className="text-gray-600 hover:text-blue-600 transition-colors">
+              Contacto
+            </Link>
           </nav>
 
-          {/* Desktop Buttons */}
+          {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" className="text-gray-600 hover:text-blue-600">
-              Iniciar Sesión
-            </Button>
-            <Button className="bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 text-white">
-              Registrarse
-            </Button>
+            <Link to="/login">
+              <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50">
+                Iniciar Sesión
+              </Button>
+            </Link>
+            <Link to="/register">
+              <Button className="bg-blue-600 hover:bg-blue-700">
+                Registrarse
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
+            className="md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 border-t border-gray-100">
+          <div className="md:hidden mt-4 pb-4 border-t pt-4">
             <nav className="flex flex-col space-y-4">
-              <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">Inicio</a>
-              <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">Doctores</a>
-              <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">Especialidades</a>
-              <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">Cómo funciona</a>
-              <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="ghost" className="text-gray-600 hover:text-blue-600 justify-start">
-                  Iniciar Sesión
-                </Button>
-                <Button className="bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 text-white justify-start">
-                  Registrarse
-                </Button>
+              <Link to="/" className="text-gray-600 hover:text-blue-600 transition-colors">
+                Inicio
+              </Link>
+              <Link to="/doctors" className="text-gray-600 hover:text-blue-600 transition-colors">
+                Doctores
+              </Link>
+              <Link to="/specialties" className="text-gray-600 hover:text-blue-600 transition-colors">
+                Especialidades
+              </Link>
+              <Link to="/about" className="text-gray-600 hover:text-blue-600 transition-colors">
+                Nosotros
+              </Link>
+              <Link to="/contact" className="text-gray-600 hover:text-blue-600 transition-colors">
+                Contacto
+              </Link>
+              <div className="flex flex-col space-y-2 pt-4 border-t">
+                <Link to="/login">
+                  <Button variant="outline" className="w-full border-blue-600 text-blue-600 hover:bg-blue-50">
+                    Iniciar Sesión
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                    Registrarse
+                  </Button>
+                </Link>
               </div>
             </nav>
           </div>
