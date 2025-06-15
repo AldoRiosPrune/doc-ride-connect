@@ -1,20 +1,21 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Mail, Lock, Heart } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Eye, EyeOff, Mail, Lock, Heart, User, Stethoscope } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("patient");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login attempt:", { email, password });
+    console.log("Login attempt:", { email, password, userType });
     // Aquí irá la lógica de autenticación cuando conectes el backend
   };
 
@@ -39,6 +40,27 @@ const Login = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Selección de tipo de usuario */}
+              <div className="space-y-3">
+                <Label className="text-base font-medium">Tipo de cuenta</Label>
+                <RadioGroup value={userType} onValueChange={setUserType} className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50 transition-colors">
+                    <RadioGroupItem value="patient" id="patient" />
+                    <Label htmlFor="patient" className="flex items-center gap-2 cursor-pointer">
+                      <User className="w-4 h-4 text-blue-600" />
+                      <span>Paciente</span>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50 transition-colors">
+                    <RadioGroupItem value="doctor" id="doctor" />
+                    <Label htmlFor="doctor" className="flex items-center gap-2 cursor-pointer">
+                      <Stethoscope className="w-4 h-4 text-green-600" />
+                      <span>Doctor</span>
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="email">Correo Electrónico</Label>
                 <div className="relative">
@@ -95,7 +117,7 @@ const Login = () => {
               </div>
 
               <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-                Iniciar Sesión
+                Iniciar Sesión como {userType === "doctor" ? "Doctor" : "Paciente"}
               </Button>
             </form>
 
