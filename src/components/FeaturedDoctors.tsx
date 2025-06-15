@@ -1,4 +1,3 @@
-
 import DoctorCard from "./DoctorCard";
 
 // Hacemos el componente más flexible:
@@ -24,8 +23,8 @@ interface FeaturedDoctorsProps {
 
 const FeaturedDoctors = ({
   doctors,
-  title = "Doctores Destacados",
-  subtitle = "Los profesionales mejor valorados por nuestros pacientes"
+  title = "Los Mejores Doctores de México",
+  subtitle = "Profesionales de la salud destacados de todo el país, reconocidos por su excelencia y experiencia"
 }: FeaturedDoctorsProps) => {
   return (
     <section className="py-16 px-4 bg-gray-50">
@@ -34,7 +33,7 @@ const FeaturedDoctors = ({
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
             {title}
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             {subtitle}
           </p>
         </div>
@@ -50,4 +49,3 @@ const FeaturedDoctors = ({
 };
 
 export default FeaturedDoctors;
-
