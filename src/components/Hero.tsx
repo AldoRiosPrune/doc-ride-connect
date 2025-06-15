@@ -3,10 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, MapPin } from "lucide-react";
 import { useState } from "react";
+import { useDoctorSearch } from "@/hooks/useDoctorSearch";
 
 const Hero = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState("");
+  const { searchDoctors, isLoading } = useDoctorSearch();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    searchDoctors(searchTerm, location);
+  };
 
   return (
     <section className="pt-20 pb-16 px-4">
@@ -24,7 +31,7 @@ const Hero = () => {
           </p>
 
           {/* Search Form */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 mb-12 max-w-4xl mx-auto border border-gray-100">
+          <form onSubmit={handleSearch} className="bg-white rounded-2xl shadow-xl p-6 mb-12 max-w-4xl mx-auto border border-gray-100">
             <div className="grid md:grid-cols-3 gap-4">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -46,11 +53,15 @@ const Hero = () => {
                 />
               </div>
               
-              <Button className="h-12 bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 text-white font-semibold">
-                Buscar Doctores
+              <Button 
+                type="submit"
+                disabled={isLoading}
+                className="h-12 bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 text-white font-semibold"
+              >
+                {isLoading ? "Buscando..." : "Buscar Doctores"}
               </Button>
             </div>
-          </div>
+          </form>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
