@@ -1,151 +1,100 @@
 
-import { Card } from "@/components/ui/card";
+import React from "react";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, MapPin, Clock, Calendar, Lock } from "lucide-react";
+import { Star, MapPin, Clock, Calendar } from "lucide-react";
 import { useAuthStatus } from "@/hooks/useAuthStatus";
 import { useToast } from "@/hooks/use-toast";
-import {
-  TooltipProvider,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@/components/ui/tooltip";
 
-interface Doctor {
+interface DoctorCardProps {
   id: number;
   name: string;
   specialty: string;
   rating: number;
-  reviews: number;
-  experience: string;
+  reviewCount: number;
   location: string;
+  availability: string;
   image: string;
   price: string;
-  available: boolean;
-  nextAvailable: string;
+  experience: string;
 }
 
-interface DoctorCardProps {
-  doctor: Doctor;
-}
-
-const DoctorCard = ({ doctor }: DoctorCardProps) => {
-  const { isLoggedIn } = useAuthStatus();
+const DoctorCard = ({ id, name, specialty, rating, reviewCount, location, availability, image, price, experience }: DoctorCardProps) => {
+  const { isAuthenticated } = useAuthStatus();
   const { toast } = useToast();
 
-  // El botón solo debe poder clickearse si está logueado y el doctor está disponible
-  const canSchedule = doctor.available && isLoggedIn;
-
   const handleScheduleAppointment = () => {
-    if (canSchedule) {
+    if (!isAuthenticated) {
       toast({
-        title: "¡Cita agendada!",
-        description: `Tu cita con ${doctor.name} ha sido agendada exitosamente.`,
+        title: "Acceso requerido",
+        description: "Por favor, inicia sesión para agendar una cita.",
+        variant: "destructive",
       });
-      console.log(`Agendando cita con ${doctor.name}`);
+      return;
     }
+
+    // Simulate scheduling appointment
+    console.log(`Agendando cita con ${name}`);
+    
+    toast({
+      title: "¡Cita agendada exitosamente!",
+      description: `Tu cita con ${name} ha sido programada. Recibirás una confirmación por email.`,
+    });
   };
 
   return (
-    <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-      {/* Doctor Image */}
-      <div className="relative">
-        <img
-          src={doctor.image}
-          alt={doctor.name}
-          className="w-full h-48 object-cover"
-        />
-        <div className="absolute top-3 right-3">
-          {doctor.available ? (
-            <Badge className="bg-green-500 hover:bg-green-600 text-white">
-              Disponible
-            </Badge>
-          ) : (
-            <Badge variant="secondary" className="bg-gray-500 text-white">
-              Ocupado
-            </Badge>
-          )}
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
+      <CardHeader className="p-0">
+        <div className="relative h-48 overflow-hidden">
+          <img 
+            src={image} 
+            alt={name}
+            className="w-full h-full object-cover"
+          />
+          <Badge className="absolute top-2 right-2 bg-green-500">
+            Disponible
+          </Badge>
         </div>
-      </div>
-
-      <div className="p-6">
-        {/* Doctor Info */}
-        <div className="mb-4">
-          <h3 className="text-xl font-bold text-gray-800 mb-1">{doctor.name}</h3>
-          <p className="text-blue-600 font-medium mb-2">{doctor.specialty}</p>
+      </CardHeader>
+      
+      <CardContent className="p-4">
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-gray-900">{name}</h3>
+          <p className="text-blue-600 font-medium">{specialty}</p>
           
-          {/* Rating */}
-          <div className="flex items-center mb-2">
-            <Star className="h-4 w-4 text-yellow-400 fill-current" />
-            <span className="ml-1 text-sm font-semibold">{doctor.rating}</span>
-            <span className="ml-1 text-sm text-gray-500">({doctor.reviews} reseñas)</span>
+          <div className="flex items-center gap-1">
+            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+            <span className="text-sm font-medium">{rating}</span>
+            <span className="text-sm text-gray-500">({reviewCount} reseñas)</span>
           </div>
-
-          {/* Experience */}
-          <div className="flex items-center text-sm text-gray-600 mb-2">
-            <Clock className="h-4 w-4 mr-1" />
-            <span>{doctor.experience} de experiencia</span>
+          
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <MapPin className="w-4 h-4" />
+            <span>{location}</span>
           </div>
-
-          {/* Location */}
-          <div className="flex items-center text-sm text-gray-600 mb-3">
-            <MapPin className="h-4 w-4 mr-1" />
-            <span>{doctor.location}</span>
+          
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <Clock className="w-4 h-4" />
+            <span>{availability}</span>
+          </div>
+          
+          <div className="flex items-center justify-between pt-2">
+            <span className="text-lg font-bold text-green-600">{price}</span>
+            <span className="text-sm text-gray-500">{experience}</span>
           </div>
         </div>
-
-        {/* Price and Availability */}
-        <div className="border-t pt-4">
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <span className="text-2xl font-bold text-green-600">{doctor.price}</span>
-              <span className="text-sm text-gray-500 ml-1">por consulta</span>
-            </div>
-          </div>
-
-          <div className="flex items-center text-sm text-gray-600 mb-4">
-            <Calendar className="h-4 w-4 mr-1" />
-            <span>Próxima cita: {doctor.nextAvailable}</span>
-          </div>
-
-          {/* Botón: solo activo si existe sesión y doctor disponible */}
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span>
-                  <Button
-                    className={`w-full ${
-                      canSchedule
-                        ? "bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600"
-                        : "bg-gray-300 hover:bg-gray-400 cursor-not-allowed"
-                    } text-white`}
-                    disabled={!canSchedule}
-                    onClick={handleScheduleAppointment}
-                  >
-                    {!isLoggedIn ? (
-                      <span className="flex items-center gap-2">
-                        <Lock className="w-4 h-4" />
-                        Inicia sesión para agendar
-                      </span>
-                    ) : doctor.available ? (
-                      "Agendar Cita"
-                    ) : (
-                      "Ver Disponibilidad"
-                    )}
-                  </Button>
-                </span>
-              </TooltipTrigger>
-              {/* Mostrar tooltip solo si no está logueado */}
-              {!isLoggedIn && (
-                <TooltipContent side="top" align="center">
-                  Inicia sesión para poder agendar una cita.
-                </TooltipContent>
-              )}
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      </div>
+      </CardContent>
+      
+      <CardFooter className="p-4 pt-0">
+        <Button 
+          className="w-full" 
+          onClick={handleScheduleAppointment}
+        >
+          <Calendar className="w-4 h-4 mr-2" />
+          Agendar Cita
+        </Button>
+      </CardFooter>
     </Card>
   );
 };
