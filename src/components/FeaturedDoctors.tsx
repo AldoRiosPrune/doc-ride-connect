@@ -1,76 +1,46 @@
 
 import DoctorCard from "./DoctorCard";
 
-const featuredDoctors = [
-  {
-    id: 1,
-    name: "Dr. María González",
-    specialty: "Cardiología",
-    rating: 4.9,
-    reviews: 128,
-    experience: "15 años",
-    location: "Madrid Centro",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&h=300&fit=crop&crop=face",
-    price: "€80",
-    available: true,
-    nextAvailable: "Hoy 3:00 PM"
-  },
-  {
-    id: 2,
-    name: "Dr. Carlos Ruiz",
-    specialty: "Neurología",
-    rating: 4.8,
-    reviews: 95,
-    experience: "12 años",
-    location: "Barcelona Norte",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&h=300&fit=crop&crop=face",
-    price: "€90",
-    available: true,
-    nextAvailable: "Mañana 10:00 AM"
-  },
-  {
-    id: 3,
-    name: "Dra. Ana Martín",
-    specialty: "Pediatría",
-    rating: 5.0,
-    reviews: 156,
-    experience: "18 años",
-    location: "Valencia Centro",
-    image: "https://images.unsplash.com/photo-1594824475317-68e1b28bb296?w=300&h=300&fit=crop&crop=face",
-    price: "€70",
-    available: false,
-    nextAvailable: "Lunes 9:00 AM"
-  },
-  {
-    id: 4,
-    name: "Dr. Roberto Silva",
-    specialty: "Traumatología",
-    rating: 4.7,
-    reviews: 89,
-    experience: "20 años",
-    location: "Sevilla Este",
-    image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=300&h=300&fit=crop&crop=face",
-    price: "€85",
-    available: true,
-    nextAvailable: "Hoy 5:30 PM"
-  }
-];
+// Hacemos el componente más flexible:
+interface Doctor {
+  id: number;
+  name: string;
+  specialty: string;
+  rating: number;
+  reviews: number;
+  experience: string;
+  location: string;
+  image: string;
+  price: string;
+  available: boolean;
+  nextAvailable: string;
+}
 
-const FeaturedDoctors = () => {
+interface FeaturedDoctorsProps {
+  doctors: Doctor[];
+  title?: string;
+  subtitle?: string;
+}
+
+const FeaturedDoctors = ({
+  doctors,
+  title = "Doctores Destacados",
+  subtitle = "Los profesionales mejor valorados por nuestros pacientes"
+}: FeaturedDoctorsProps) => {
   return (
     <section className="py-16 px-4 bg-gray-50">
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Doctores Destacados
+            {title}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Los profesionales mejor valorados por nuestros pacientes
+            {subtitle}
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredDoctors.map((doctor) => (
+          {doctors.map((doctor) => (
             <DoctorCard key={doctor.id} doctor={doctor} />
           ))}
         </div>
@@ -80,3 +50,4 @@ const FeaturedDoctors = () => {
 };
 
 export default FeaturedDoctors;
+

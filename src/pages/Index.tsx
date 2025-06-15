@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,6 +11,7 @@ import FeaturedDoctors from "@/components/FeaturedDoctors";
 import DoctorCTA from "@/components/DoctorCTA";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
+import featuredDoctors from "@/data/doctors";
 
 const Index = () => {
   return (
@@ -19,7 +19,7 @@ const Index = () => {
       <Header />
       <Hero />
       <Specialties />
-      <FeaturedDoctors />
+      <FeaturedDoctors doctors={featuredDoctors} />
       <DoctorCTA />
       <HowItWorks />
       <Footer />
