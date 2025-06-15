@@ -1,6 +1,7 @@
 
 import Header from "@/components/Header";
 import Specialties from "@/components/Specialties";
+import PunctuationSearch from "@/components/PunctuationSearch";
 
 const AllSpecialties = () => {
   return (
@@ -17,6 +18,8 @@ const AllSpecialties = () => {
               Explora todas nuestras especialidades médicas y encuentra el cuidado que necesitas
             </p>
           </div>
+          
+          <PunctuationSearch />
         </div>
       </section>
 
