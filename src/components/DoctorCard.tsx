@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Star, MapPin, Clock, Calendar } from "lucide-react";
 import { useAuthStatus } from "@/hooks/useAuthStatus";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 interface DoctorCardProps {
   id: number;
@@ -23,8 +24,11 @@ interface DoctorCardProps {
 const DoctorCard = ({ id, name, specialty, rating, reviewCount, location, availability, image, price, experience }: DoctorCardProps) => {
   const { isAuthenticated } = useAuthStatus();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
-  const handleScheduleAppointment = () => {
+  const handleScheduleAppointment = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Evita que se active el click del card
+    
     if (!isAuthenticated) {
       toast({
         title: "Acceso requerido",
@@ -34,17 +38,21 @@ const DoctorCard = ({ id, name, specialty, rating, reviewCount, location, availa
       return;
     }
 
-    // Simulate scheduling appointment
-    console.log(`Agendando cita con ${name}`);
-    
     toast({
       title: "¡Cita agendada exitosamente!",
       description: `Tu cita con ${name} ha sido programada. Recibirás una confirmación por email.`,
     });
   };
 
+  const handleCardClick = () => {
+    navigate(`/doctor/${id}`);
+  };
+
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
+    <Card 
+      className="overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer" 
+      onClick={handleCardClick}
+    >
       <CardHeader className="p-0">
         <div className="relative h-48 overflow-hidden">
           <img 
