@@ -10,12 +10,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { User, Settings, Heart, FileText, LogOut, Bell } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface UserProfileDropdownProps {
   userName: string;
 }
 
 const UserProfileDropdown = ({ userName }: UserProfileDropdownProps) => {
+  const navigate = useNavigate();
+
+  const handleProfileClick = () => {
+    navigate("/profile");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,7 +43,7 @@ const UserProfileDropdown = ({ userName }: UserProfileDropdownProps) => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleProfileClick}>
           <User className="mr-2 h-4 w-4" />
           <span>Mi Perfil</span>
         </DropdownMenuItem>
