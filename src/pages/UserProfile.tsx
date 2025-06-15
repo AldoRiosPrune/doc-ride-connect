@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,7 @@ import { User, Mail, Phone, MapPin, Calendar, Edit, Save, X } from "lucide-react
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import DoctorPreferences from "@/components/DoctorPreferences";
 
 const UserProfile = () => {
   const { toast } = useToast();
@@ -205,6 +205,11 @@ const UserProfile = () => {
                 </CardContent>
               </Card>
             </div>
+          </div>
+
+          {/* Doctor Preferences Section */}
+          <div className="mt-8">
+            <DoctorPreferences />
           </div>
         </div>
       </div>
